@@ -51,7 +51,7 @@ a { color: inherit; }
 .mapzone { max-width: 880px; margin: 34px auto 10px; padding: 0 18px; }
 .mapframe { position: relative; border: 1.5px solid var(--ink); border-radius: 18px; overflow: hidden;
   background: #fffdf9; box-shadow: 0 18px 50px rgba(36,29,26,.14); cursor: crosshair; }
-.mapframe svg.art { display: block; width: 100%; height: auto; user-select: none; }
+.mapframe .art { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
 .map-cap { text-align: center; font: italic 400 13.5px var(--display); color: var(--muted); margin-top: 12px; }
 .map-cap b { color: var(--ink-2); }
 
@@ -135,40 +135,11 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
 </section>
 
 <!-- ================= THE SILLY MAP =================
-     PLACEHOLDER: the doodle <svg class="art"> below stands in for the real
-     interactive sample map. Swap the svg (keep the .mapframe wrapper and the
-     #pins layer) when the real art lands. Pins/clouds/birds keep working. -->
+     Sample neighborhood art (map.jpg). The #pins layer, clouds and birds sit
+     on top; pin positions are % of the frame — retune them if the art changes. -->
 <div class="mapzone">
   <div class="mapframe" id="mapframe">
-    <svg class="art" viewBox="0 0 880 460" xmlns="http://www.w3.org/2000/svg" aria-label="A silly hand-drawn city map">
-      <rect width="880" height="460" fill="#fffdf9"/>
-      <!-- river -->
-      <path d="M-10 300 C 140 260, 240 350, 420 310 S 720 240, 900 290" fill="none" stroke="#bcd7d3" stroke-width="34" stroke-linecap="round"/>
-      <path d="M-10 300 C 140 260, 240 350, 420 310 S 720 240, 900 290" fill="none" stroke="#241d1a" stroke-width="2.5" stroke-dasharray="1 9" stroke-linecap="round"/>
-      <!-- park -->
-      <path d="M120 120 C 90 60, 220 40, 260 80 C 330 60, 360 140, 300 170 C 270 210, 150 210, 130 170 C 100 160, 100 140, 120 120 Z" fill="#dbe8d5" stroke="#241d1a" stroke-width="2.5"/>
-      <text x="185" y="140" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="16" fill="#5c534d" text-anchor="middle">the park</text>
-      <!-- blocks -->
-      <g stroke="#241d1a" stroke-width="2.5" fill="#f5ece2">
-        <rect x="420" y="70" width="70" height="52" rx="6" transform="rotate(-3 455 96)"/>
-        <rect x="520" y="90" width="56" height="70" rx="6" transform="rotate(2 548 125)"/>
-        <rect x="640" y="60" width="88" height="58" rx="6" transform="rotate(-2 684 89)"/>
-        <rect x="470" y="180" width="60" height="46" rx="6" transform="rotate(3 500 203)"/>
-        <rect x="90 " y="360" width="80" height="52" rx="6" transform="rotate(-2 130 386)"/>
-        <rect x="600" y="360" width="66" height="50" rx="6" transform="rotate(2 633 385)"/>
-      </g>
-      <!-- bridge -->
-      <path d="M370 340 q 40 -34 84 -6" fill="none" stroke="#241d1a" stroke-width="3"/>
-      <path d="M372 344 l 80 -4" stroke="#241d1a" stroke-width="2" stroke-dasharray="4 5"/>
-      <!-- little ferris wheel doodle -->
-      <g transform="translate(770,180)" stroke="#241d1a" stroke-width="2.2" fill="none">
-        <circle r="30"/><circle r="4" fill="#e85d75" stroke="none"/>
-        <path d="M0 -30 V30 M-30 0 H30 M-21 -21 L21 21 M21 -21 L-21 21"/>
-        <path d="M-16 30 L0 4 L16 30" stroke-width="2.6"/>
-      </g>
-      <text x="770" y="238" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="13" fill="#8a7e75" text-anchor="middle">the wheel</text>
-      <text x="440" y="440" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="13" fill="#c9bfb4" text-anchor="middle">— placeholder map: the real silly map docks here —</text>
-    </svg>
+    <img class="art" src="map.jpg" alt="A hand-drawn neighborhood map — row houses, Oak St, and Neighborhood Park" draggable="false" />
     <div id="pins"></div>
   </div>
   <div class="map-cap"><b>Poke around.</b> Hover the pins · click anywhere on the map to drop a plan of your own ⚫</div>
@@ -238,14 +209,15 @@ const frame = document.getElementById("mapframe");
 const pinsEl = document.getElementById("pins");
 
 const PINS = [
-  { x: 21, y: 28, e: "🥾", t: "Eagle Rock Hike", s: "Thursday · 8 going" },
-  { x: 55, y: 21, e: "🥟", t: "3am Dumplings", s: "tonight · 4 going" },
-  { x: 76, y: 62, e: "🎸", t: "Front Stoop Show", s: "Saturday · 12 going" },
-  { x: 38, y: 55, e: "🧊", t: "Cold Plunge Crew", s: "Sunday · brave only" },
-  { x: 63, y: 40, e: "📚", t: "Sunday Zine Club", s: "weekly · 6 regulars" },
-  { x: 14, y: 76, e: "☕", t: "Secret Espresso Window", s: "a point of interest" },
+  { x: 27, y: 40, e: "🎸", t: "Front Stoop Show", s: "Saturday · 12 going" },
+  { x: 54, y: 19, e: "🥟", t: "3am Dumplings", s: "tonight · 4 going" },
+  { x: 56, y: 46, e: "🧺", t: "Park Bench Hang", s: "Sunday · bring snacks" },
+  { x: 25, y: 64, e: "🎡", t: "Wheel Sunset Club", s: "golden hour · 6 going" },
+  { x: 93, y: 38, e: "🧊", t: "Cold Plunge Crew", s: "the river · brave only" },
+  { x: 74, y: 31, e: "☕", t: "Secret Espresso Window", s: "Oak St · a point of interest" },
+  { x: 12, y: 80, e: "📚", t: "Sunday Zine Club", s: "weekly · 6 regulars" },
 ];
-const DOTS = [[30,40],[47,34],[70,26],[58,74],[26,62],[82,44],[44,80]];
+const DOTS = [[17,30],[40,86],[66,58],[83,74],[36,74],[90,18],[63,88]];
 const DROP_EMOJI = ["🎉","🌮","🛼","🎨","🏀","🕺","🎶","🧺","🌙","🍜"];
 const DROP_NOTES = ["your plan here?", "ok now invite someone", "this could be Thursday", "the map remembers", "first one's free"];
 
