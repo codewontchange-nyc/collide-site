@@ -10,14 +10,14 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='40' cy='50' r='28' fill='%23e85d75'/><circle cx='60' cy='50' r='28' fill='%23219a8f' fill-opacity='.85'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Coming+Soon&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=Lacquer&display=swap" rel="stylesheet" />
 <style>
 :root {
   --paper: #fbf6f0; --surface: #fff; --surface-2: #f5ece2;
   --ink: #241d1a; --ink-2: #5c534d; --muted: #8a7e75; --faint: #c9bfb4; --line: #ece1d5;
   --rose: #e85d75; --rose-ink: #b03450; --teal: #18857a; --teal-ink: #0f5d55; --amber: #f0a830;
-  --display: "Fraunces", Georgia, serif;
-  --kids: "Coming Soon", "Comic Sans MS", cursive;
+  --display: "Cormorant Garamond", Georgia, serif;   /* wordmark + italic accents */
+  --kids: "Lacquer", "Comic Sans MS", cursive;        /* headers */
   --body: "Inter", -apple-system, sans-serif;
 }
 * { box-sizing: border-box; }
@@ -35,14 +35,14 @@ a { color: inherit; }
 .dots .teal { background: var(--teal); opacity: .85; margin-left: -12px; }
 .wordmark { font: 500 64px/1 'Cormorant Garamond', Georgia, serif; letter-spacing: .005em; margin: 4px 0 0; }
 .rule { border-top: 3px double var(--ink); max-width: 560px; margin: 18px auto 0; }
-.tagline { font: italic 500 18px var(--display); color: var(--ink-2); margin-top: 12px; }
+.tagline { font: italic 500 21px var(--display); color: var(--ink-2); margin-top: 12px; }
 
 /* ---------- hero ---------- */
 .hero { text-align: center; padding: 30px 18px 8px; }
 .hero h1 { font: 400 clamp(36px, 6.4vw, 58px)/1.14 var(--kids); letter-spacing: 0; margin: 0 auto 16px; max-width: 720px; }
 .hero p { max-width: 540px; margin: 0 auto 26px; color: var(--ink-2); font-size: 17.5px; }
 .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.btn { display: inline-block; background: var(--ink); color: var(--paper); font: 700 16px var(--display); text-decoration: none;
+.btn { display: inline-block; background: var(--ink); color: var(--paper); font: 700 15.5px var(--body); text-decoration: none;
   padding: 14px 34px; border-radius: 999px; transition: transform .12s, filter .12s; border: 0; cursor: pointer; }
 .btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
 .btn.rose { background: var(--rose); color: #fff; }
@@ -53,7 +53,7 @@ a { color: inherit; }
 .mapframe { position: relative; border: 1.5px solid var(--ink); border-radius: 18px; overflow: hidden;
   background: #fffdf9; box-shadow: 0 18px 50px rgba(36,29,26,.14); cursor: crosshair; }
 .mapframe .art { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
-.map-cap { text-align: center; font: italic 400 13.5px var(--display); color: var(--muted); margin-top: 12px; }
+.map-cap { text-align: center; font: italic 500 15.5px var(--display); color: var(--muted); margin-top: 12px; }
 .map-cap b { color: var(--ink-2); }
 
 .pin { position: absolute; transform: translate(-50%, -50%); width: 46px; height: 46px; border-radius: 50%;
@@ -63,7 +63,7 @@ a { color: inherit; }
 .pin .bubble { position: absolute; bottom: 118%; left: 50%; transform: translateX(-50%) scale(.85); transform-origin: bottom center;
   background: #fff; border: 1.5px solid var(--ink); border-radius: 12px; padding: 7px 12px; white-space: nowrap;
   font: 600 12.5px var(--body); opacity: 0; pointer-events: none; transition: all .16s; box-shadow: 0 6px 18px rgba(18,14,12,.2); }
-.pin .bubble i { display: block; font: italic 400 11px var(--display); color: var(--muted); }
+.pin .bubble i { display: block; font: italic 500 12.5px var(--display); color: var(--muted); }
 .pin.open .bubble, .pin:hover .bubble { opacity: 1; transform: translateX(-50%) scale(1); }
 .pin.dropped { animation: plop .3s cubic-bezier(.2, 1.6, .4, 1); }
 @keyframes plop { from { transform: translate(-50%, -120%) scale(.4); opacity: 0; } }
@@ -105,19 +105,19 @@ section.ed { padding: 56px 0 8px; }
 .step { display: flex; gap: 18px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--line); }
 .step:last-child { border-bottom: 0; }
 .step::before { counter-increment: st; content: counter(st); flex: none; width: 40px; height: 40px; border-radius: 50%;
-  background: var(--rose); color: #fff; display: grid; place-items: center; font: 700 18px var(--display); }
+  background: var(--rose); color: #fff; display: grid; place-items: center; font: 700 17px var(--body); }
 .step h4 { font: 400 19px var(--kids); margin: 6px 0 4px; }
 .step p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
 
 blockquote.pull { max-width: 620px; margin: 60px auto; padding: 0 22px; text-align: center; border: 0; }
-blockquote.pull p { font: italic 500 clamp(22px, 3.4vw, 30px)/1.4 var(--display); color: var(--ink); margin: 0 0 10px; }
+blockquote.pull p { font: italic 500 clamp(24px, 3.6vw, 33px)/1.4 var(--display); color: var(--ink); margin: 0 0 10px; }
 blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
 
 .cities { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
 .citycard { border: 1.5px solid var(--ink); border-radius: 14px; padding: 14px 22px; text-align: center; background: var(--surface); min-width: 128px; }
 .citycard.soon { border-style: dashed; border-color: var(--faint); background: transparent; }
 .citycard .n { font: 400 19px var(--kids); }
-.citycard .s { font: italic 400 12px var(--display); color: var(--muted); margin-top: 2px; }
+.citycard .s { font: italic 500 13.5px var(--display); color: var(--muted); margin-top: 2px; }
 .citycard.live .s { color: var(--teal-ink); font-style: normal; font-weight: 600; }
 
 /* ---------- footer ---------- */
@@ -145,7 +145,7 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
     <a class="btn rose" href="https://codewontchange-nyc.github.io/Collide/">Sign up →</a>
     <a class="btn ghost" href="#how">How it works</a>
   </div>
-  <p style="font:italic 400 13px var(--display);color:var(--muted);margin-top:14px">already on Collide? same door — <a href="https://codewontchange-nyc.github.io/Collide/">sign in</a></p>
+  <p style="font:italic 500 15px var(--display);color:var(--muted);margin-top:14px">already on Collide? same door — <a href="https://codewontchange-nyc.github.io/Collide/">sign in</a></p>
 </section>
 
 <!-- ================= THE SILLY MAP =================
