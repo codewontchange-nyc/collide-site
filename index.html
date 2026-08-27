@@ -153,6 +153,28 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
 .ch-phone { display: flex; justify-content: center; will-change: transform; }
 .ch-phone img { width: min(300px, 78vw); border: 1.5px solid var(--ink); border-radius: 34px;
   box-shadow: 0 22px 54px rgba(36,29,26,.22); background: #fffdf9; }
+.ch-quote { margin-top: 22px; max-width: 400px; }
+.newsy { border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); height: 6px; margin-bottom: 14px; }
+.ch-quote blockquote { margin: 0 0 6px; font: italic 500 18px/1.45 var(--display); color: var(--ink); }
+.ch-quote cite { display: flex; align-items: center; font: 700 10.5px var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-style: normal; }
+.nq-av { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink); background: #fff; object-fit: cover; float: left; margin: 2px 12px 4px 0; box-shadow: 0 4px 12px rgba(36,29,26,.18); }
+.ch-copy.center .ch-quote { margin: 22px auto 0; }
+
+/* enter/exit life: chapters animate in when they arrive, out when they leave */
+.chapter .ch-kicker, .chapter h3, .chapter .ch-copy > p, .chapter .ch-quote, .chapter .ch-phone img {
+  opacity: 0; transform: translateY(24px); transition: opacity .55s cubic-bezier(.2,.7,.3,1), transform .55s cubic-bezier(.2,.7,.3,1); }
+.chapter .ch-quote { transform: translateY(24px) rotate(-1.2deg); }
+.chapter .nq-av { transform: scale(0); transition: transform .45s cubic-bezier(.2,1.6,.4,1) .35s; }
+.chapter.live .ch-kicker { opacity: 1; transform: none; transition-delay: .02s; }
+.chapter.live h3 { opacity: 1; transform: none; transition-delay: .1s; }
+.chapter.live .ch-copy > p { opacity: 1; transform: none; transition-delay: .18s; }
+.chapter.live .ch-quote { opacity: 1; transform: none; transition-delay: .3s; }
+.chapter.live .nq-av { transform: scale(1); }
+.chapter.live .ch-phone img { opacity: 1; transform: none; transition-delay: .12s; }
+@media (prefers-reduced-motion: reduce) {
+  .chapter .ch-kicker, .chapter h3, .chapter .ch-copy > p, .chapter .ch-quote, .chapter .ch-phone img, .chapter .nq-av {
+    opacity: 1 !important; transform: none !important; transition: none !important; } }
+
 .journey-close { text-align: center; padding: 4vh 18px 2vh; }
 .close-big { font: 400 clamp(28px, 4.4vw, 42px)/1.25 var(--kids); margin: 0 0 14px; }
 .close-sub { font: italic 500 clamp(17px, 2.3vw, 21px)/1.55 var(--display); color: var(--ink-2); margin: 0; }
@@ -277,6 +299,12 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
         <div class="ch-kicker">chapter one · you join</div>
         <h3>New city, or same city — new chapter.</h3>
         <p>You open the map and it's already talking. Real spots, real plans, drawn by hand. No feed to perform for. Just a city that wants you outside.</p>
+        <div class="ch-quote">
+          <div class="newsy"></div>
+          <img class="nq-av" src="av-maya.png" alt="" />
+          <blockquote>“My city feels alive again.”</blockquote>
+          <cite>— Maya F. · joined in June</cite>
+        </div>
       </div>
       <div class="ch-phone" data-speed="0.1"><img src="shot-map.jpg" alt="The Collide map of NYC — hand-drawn, dotted with live plans" loading="lazy" /></div>
     </div>
@@ -286,6 +314,12 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
         <div class="ch-kicker">chapter two · you show up once</div>
         <h3>You RSVP to one thing.</h3>
         <p>Nobody knows you yet — that's fine, everyone came to meet someone. You leave with two names you actually remember. They go in your circle.</p>
+        <div class="ch-quote">
+          <div class="newsy"></div>
+          <img class="nq-av" src="av-jules.png" alt="" />
+          <blockquote>“Went alone. Left with plans for Thursday.”</blockquote>
+          <cite>— Jules R. · month two</cite>
+        </div>
       </div>
       <div class="ch-phone" data-speed="0.16"><img src="shot-upnext.jpg" alt="Up next — the days ahead, like a tiny newspaper" loading="lazy" /></div>
     </div>
@@ -298,6 +332,12 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
         <div class="ch-kicker">chapter three · it becomes a rhythm</div>
         <h3>Saying yes gets easy.</h3>
         <p>A yoga class you end up hosting. A Thursday that turns into a tradition. Every plan adds a person or two — no small talk marathon required.</p>
+        <div class="ch-quote">
+          <div class="newsy"></div>
+          <img class="nq-av" src="av-sofia.png" alt="" />
+          <blockquote>“Two years in this city — it finally feels like home. Somehow I'm the one hosting now.”</blockquote>
+          <cite>— Sofia R. · hosts yoga</cite>
+        </div>
       </div>
       <div class="ch-phone" data-speed="0.1"><img src="shot-yourein.jpg" alt="You're in — your calendar of plans, including one you host" loading="lazy" /></div>
     </div>
@@ -307,6 +347,12 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
         <div class="ch-kicker">chapter four · you keep them</div>
         <h3>Your circle, on purpose.</h3>
         <p>Not followers. Not contacts. A handful of people who text back. A yap — <i>"who's at the park rn"</i> — is all it takes to keep it warm. No streaks. No stress.</p>
+        <div class="ch-quote">
+          <div class="newsy"></div>
+          <img class="nq-av" src="av-andre.png" alt="" />
+          <blockquote>“Eight people who actually text back. That's rich.”</blockquote>
+          <cite>— Andre O. · circle of 8</cite>
+        </div>
       </div>
       <div class="ch-phone" data-speed="0.16"><img src="shot-circle.jpg" alt="My circle — the people you keep, even the one in Atlanta" loading="lazy" /></div>
     </div>
@@ -505,6 +551,12 @@ function journeyTick() {
 let jTicking = false;
 addEventListener("scroll", () => { if (!jTicking) { jTicking = true; requestAnimationFrame(() => { journeyTick(); jTicking = false; }); } }, { passive: true });
 journeyTick();
+
+/* chapters come alive on arrival and fade on exit */
+const chObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e) => e.target.classList.toggle("live", e.isIntersecting));
+}, { threshold: 0.22 });
+chapters.forEach((ch) => chObserver.observe(ch));
 </script>
 </body>
 </html>
