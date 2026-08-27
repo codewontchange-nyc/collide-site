@@ -120,6 +120,40 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
 .citycard .s { font: italic 500 13.5px var(--display); color: var(--muted); margin-top: 2px; }
 .citycard.live .s { color: var(--teal-ink); font-style: normal; font-weight: 600; }
 
+/* ---------- the journey: parallax timeline ---------- */
+.journey { position: relative; }
+.circlebar { position: sticky; top: 14px; z-index: 30; display: flex; align-items: center; gap: 12px;
+  width: fit-content; max-width: 94%; margin: 0 auto; background: #fffdf9; border: 1.5px solid var(--ink);
+  border-radius: 999px; padding: 9px 18px; box-shadow: 0 8px 24px rgba(36,29,26,.14); }
+.cb-label { font: 700 10px var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--rose-ink); white-space: nowrap; }
+.cb-dots { display: flex; gap: 5px; }
+.cb-dot { width: 24px; height: 24px; border-radius: 50%; border: 1.5px dashed var(--faint);
+  display: grid; place-items: center; font: 700 10.5px var(--body); color: transparent;
+  transition: transform .25s cubic-bezier(.2,1.6,.4,1); }
+.cb-dot.on { border: 1.5px solid var(--ink); color: #fff; transform: scale(1); }
+.cb-note { font: italic 500 13.5px var(--display); color: var(--muted); white-space: nowrap; }
+.chapter { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; padding: 11vh 0; }
+.chapter.flip .ch-copy { order: 2; } .chapter.flip .ch-phone { order: 1; }
+.chapter.solo { grid-template-columns: 1fr; padding: 13vh 0; }
+.ch-copy .ch-kicker { font: 700 10.5px var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--rose-ink); margin-bottom: 10px; }
+.ch-copy h3 { font: 400 clamp(24px, 3.2vw, 32px)/1.25 var(--kids); margin: 0 0 12px; }
+.ch-copy p { color: var(--ink-2); font-size: 15.5px; max-width: 420px; margin: 0; }
+.ch-copy.center { text-align: center; } .ch-copy.center p { margin: 0 auto; max-width: 460px; }
+.elsewhere { display: inline-block; margin: 10px 0; padding: 6px 16px; border: 1.5px dashed var(--muted);
+  border-radius: 999px; font: 700 11px var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.ch-phone { display: flex; justify-content: center; will-change: transform; }
+.ch-phone img { width: min(300px, 78vw); border: 1.5px solid var(--ink); border-radius: 34px;
+  box-shadow: 0 22px 54px rgba(36,29,26,.22); background: #fffdf9; }
+.journey-close { text-align: center; padding: 9vh 18px 4vh; }
+.close-big { font: 400 clamp(28px, 4.4vw, 42px)/1.25 var(--kids); margin: 0 0 14px; }
+.close-sub { font: italic 500 clamp(17px, 2.3vw, 21px)/1.55 var(--display); color: var(--ink-2); margin: 0; }
+@media (max-width: 760px) {
+  .chapter { grid-template-columns: 1fr; gap: 26px; padding: 8vh 0; }
+  .chapter.flip .ch-copy { order: 1; } .chapter.flip .ch-phone { order: 2; }
+  .cb-note { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .ch-phone { transform: none !important; } }
+
 /* ---------- footer ---------- */
 .foot { text-align: center; padding: 70px 20px 30px; }
 .foot .rule { margin-bottom: 26px; }
@@ -181,13 +215,73 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
   </div>
 </section>
 
-<section class="ed wrap" id="how">
+<section class="ed" id="how">
   <div class="sec-kicker">how it works</div>
-  <h2 class="sec-title">Three taps between you and your people.</h2>
-  <div class="steps">
-    <div class="step"><div><h4>Join a community</h4><p>Small crews with a thing — run clubs, painters, zine folks. Each one lives on the map with its own spots.</p></div></div>
-    <div class="step"><div><h4>RSVP to something</h4><p>Up next is always stocked. Say you're in, show up, that's the whole move.</p></div></div>
-    <div class="step"><div><h4>Collide</h4><p>Add who you meet to your circle. Next time they yap a plan, you're the first to know.</p></div></div>
+  <h2 class="sec-title">You collect people. You keep them.</h2>
+
+  <div class="journey wrap">
+    <div class="circlebar">
+      <span class="cb-label">your circle</span>
+      <div class="cb-dots" id="cbDots"></div>
+      <span class="cb-note" id="cbNote">just you, for now</span>
+    </div>
+
+    <div class="chapter" data-people="1">
+      <div class="ch-copy">
+        <div class="ch-kicker">chapter one · you join</div>
+        <h3>New city, or same city — new chapter.</h3>
+        <p>You open the map and it's already talking. Real spots, real plans, drawn by hand. No feed to perform for. Just a city that wants you outside.</p>
+      </div>
+      <div class="ch-phone" data-speed="0.1"><img src="shot-map.jpg" alt="The Collide map of NYC — hand-drawn, dotted with live plans" loading="lazy" /></div>
+    </div>
+
+    <div class="chapter flip" data-people="3">
+      <div class="ch-copy">
+        <div class="ch-kicker">chapter two · you show up once</div>
+        <h3>You RSVP to one thing.</h3>
+        <p>Nobody knows you yet — that's fine, everyone came to meet someone. You leave with two names you actually remember. They go in your circle.</p>
+      </div>
+      <div class="ch-phone" data-speed="0.16"><img src="shot-upnext.jpg" alt="Up next — the days ahead, like a tiny newspaper" loading="lazy" /></div>
+    </div>
+
+    <div class="chapter" data-people="5">
+      <div class="ch-copy">
+        <div class="ch-kicker">chapter three · it becomes a rhythm</div>
+        <h3>Saying yes gets easy.</h3>
+        <p>A yoga class you end up hosting. A Thursday that turns into a tradition. Every plan adds a person or two — no small talk marathon required.</p>
+      </div>
+      <div class="ch-phone" data-speed="0.1"><img src="shot-yourein.jpg" alt="You're in — your calendar of plans, including one you host" loading="lazy" /></div>
+    </div>
+
+    <div class="chapter flip" data-people="7">
+      <div class="ch-copy">
+        <div class="ch-kicker">chapter four · you keep them</div>
+        <h3>Your circle, on purpose.</h3>
+        <p>Not followers. Not contacts. Seven people who text back. A yap — <i>"who's at the park rn"</i> — is all it takes to keep it warm. No streaks. No stress.</p>
+      </div>
+      <div class="ch-phone" data-speed="0.16"><img src="shot-circle.jpg" alt="My circle — the people you keep, even the one in Atlanta" loading="lazy" /></div>
+    </div>
+
+    <div class="chapter solo" data-people="7">
+      <div class="ch-copy center">
+        <div class="ch-kicker">chapter five · life happens</div>
+        <h3>You travel. You get busy. Nothing breaks.</h3>
+        <p>One of yours moves to Atlanta. The map just says<br/><span class="elsewhere">your people elsewhere · ATL 1</span><br/>Your seat stays saved. So does theirs.</p>
+      </div>
+    </div>
+
+    <div class="chapter solo" data-people="8">
+      <div class="ch-copy center">
+        <div class="ch-kicker">chapter six · you come back</div>
+        <h3>It's like you never left.</h3>
+        <p>Old friends, new plans, same door. One more name joins the circle — someone a friend brought along. That's how it grows: slowly, and for real.</p>
+      </div>
+    </div>
+
+    <div class="journey-close">
+      <p class="close-big">Six to eight people who always include you.</p>
+      <p class="close-sub">That's not a small circle — that's abundance.<br/>Nobody you collect gets lost just because life got loud.</p>
+    </div>
   </div>
 </section>
 
@@ -294,6 +388,49 @@ for (let i = 0; i < 4; i++) {
   b.innerHTML = '<path d="M2 10 Q8 2 13 8 Q18 2 24 10"/>';
   frame.appendChild(b);
 }
+
+/* ---------- the journey: circle collector + parallax ---------- */
+const HUES = ["#e85d75","#18857a","#f0a830","#6b4fbb","#3a7bd5","#588c3f","#b03450","#0f5d55"];
+const NAMES = ["M","C","K","A","Z","P","T","L"];   // Maya, Code, Kathleen, Andre, Zoe, Priya, Tommy, Lena
+const NOTES = { 1: "just you, for now", 3: "you + two from that first night", 5: "five — zero group-chat stress",
+  7: "seven who actually show up", 8: "eight. abundant." };
+const cbDots = document.getElementById("cbDots");
+for (let i = 0; i < 8; i++) {
+  const d = document.createElement("span");
+  d.className = "cb-dot"; d.textContent = NAMES[i];
+  cbDots.appendChild(d);
+}
+const dots = [...cbDots.children];
+const chapters = [...document.querySelectorAll(".chapter")];
+const cbNote = document.getElementById("cbNote");
+let shown = 0;
+function journeyTick() {
+  // how far in: the last chapter whose top has crossed 62% of the viewport
+  let count = 1;
+  for (const ch of chapters) {
+    if (ch.getBoundingClientRect().top < innerHeight * 0.62) count = +ch.dataset.people;
+  }
+  if (count !== shown) {
+    shown = count;
+    dots.forEach((d, i) => {
+      const on = i < count;
+      if (on && !d.classList.contains("on")) {
+        setTimeout(() => { d.classList.add("on"); d.style.background = HUES[i]; d.style.transform = "scale(1.25)";
+          setTimeout(() => d.style.transform = "scale(1)", 200); }, (i % 3) * 90);
+      } else if (!on) { d.classList.remove("on"); d.style.background = ""; }
+    });
+    if (NOTES[count]) cbNote.textContent = NOTES[count];
+  }
+  // parallax phones
+  document.querySelectorAll(".ch-phone[data-speed]").forEach((el) => {
+    const r = el.getBoundingClientRect();
+    const off = (r.top + r.height / 2 - innerHeight / 2) * +el.dataset.speed;
+    el.style.transform = `translateY(${off.toFixed(1)}px)`;
+  });
+}
+let jTicking = false;
+addEventListener("scroll", () => { if (!jTicking) { jTicking = true; requestAnimationFrame(() => { journeyTick(); jTicking = false; }); } }, { passive: true });
+journeyTick();
 </script>
 </body>
 </html>
