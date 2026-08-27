@@ -152,7 +152,10 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
   .chapter.flip .ch-copy { order: 1; } .chapter.flip .ch-phone { order: 2; }
   .cb-note { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .ch-phone { transform: none !important; } }
+.fly-bubble { position: fixed; z-index: 60; width: 27px; height: 27px; border-radius: 50%;
+  border: 1.5px solid var(--ink); display: grid; place-items: center; color: #fff;
+  font: 700 11px var(--body); pointer-events: none; box-shadow: 0 6px 16px rgba(36,29,26,.3); }
+@media (prefers-reduced-motion: reduce) { .ch-phone { transform: none !important; } .fly-bubble { display: none; } }
 
 /* ---------- footer ---------- */
 .foot { text-align: center; padding: 70px 20px 30px; }
@@ -404,21 +407,53 @@ const dots = [...cbDots.children];
 const chapters = [...document.querySelectorAll(".chapter")];
 const cbNote = document.getElementById("cbNote");
 let shown = 0;
+const noMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function fillDot(i) {
+  const d = dots[i];
+  if (!d || d.classList.contains("on")) return;
+  d.classList.add("on"); d.style.background = HUES[i];
+  d.style.transform = "scale(1.3)";
+  setTimeout(() => d.style.transform = "scale(1)", 220);
+}
+function flyBubble(i, srcEl) {
+  if (noMotion || !srcEl) { fillDot(i); return; }
+  const from = srcEl.getBoundingClientRect();
+  const to = dots[i].getBoundingClientRect();
+  const b = document.createElement("span");
+  b.className = "fly-bubble"; b.textContent = NAMES[i]; b.style.background = HUES[i];
+  const sx = from.left + from.width * (0.25 + Math.random() * 0.5);
+  const sy = from.top + from.height * (0.2 + Math.random() * 0.35);
+  b.style.left = sx + "px"; b.style.top = sy + "px";
+  document.body.appendChild(b);
+  const dx = (to.left + to.width / 2 - 13) - sx, dy = (to.top + to.height / 2 - 13) - sy;
+  const wob = (Math.random() - 0.5) * 80;
+  b.animate([
+    { transform: "translate(0,0) scale(.2)", opacity: 0 },
+    { transform: "translate(" + (wob * 0.3) + "px,-34px) scale(1.25)", opacity: 1, offset: 0.22 },
+    { transform: "translate(" + (dx * 0.55 + wob) + "px," + (dy * 0.5 - 70) + "px) scale(1.05)", opacity: 1, offset: 0.62 },
+    { transform: "translate(" + dx + "px," + dy + "px) scale(.92)", opacity: 1 }
+  ], { duration: 900, easing: "cubic-bezier(.3,.6,.3,1)" }).onfinish = () => {
+    b.remove();
+    if (i < shown) fillDot(i);
+  };
+}
 function journeyTick() {
   // how far in: the last chapter whose top has crossed 62% of the viewport
-  let count = 1;
+  let count = 1, trigger = chapters[0];
   for (const ch of chapters) {
-    if (ch.getBoundingClientRect().top < innerHeight * 0.62) count = +ch.dataset.people;
+    if (ch.getBoundingClientRect().top < innerHeight * 0.62) { count = +ch.dataset.people; trigger = ch; }
   }
   if (count !== shown) {
-    shown = count;
-    dots.forEach((d, i) => {
-      const on = i < count;
-      if (on && !d.classList.contains("on")) {
-        setTimeout(() => { d.classList.add("on"); d.style.background = HUES[i]; d.style.transform = "scale(1.25)";
-          setTimeout(() => d.style.transform = "scale(1)", 200); }, (i % 3) * 90);
-      } else if (!on) { d.classList.remove("on"); d.style.background = ""; }
-    });
+    const prev = shown; shown = count;
+    if (count < prev) {
+      dots.forEach((d, i) => { if (i >= count) { d.classList.remove("on"); d.style.background = ""; } });
+    } else {
+      const srcEl = trigger.querySelector(".ch-phone img") || trigger.querySelector(".ch-copy");
+      for (let i = Math.max(prev, 0); i < count; i++) {
+        if (dots[i].classList.contains("on")) continue;
+        setTimeout(() => flyBubble(i, srcEl), (i - prev) * 170);
+      }
+    }
     if (NOTES[count]) cbNote.textContent = NOTES[count];
   }
   // parallax phones
