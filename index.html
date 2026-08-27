@@ -157,6 +157,22 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
   font: 700 11px var(--body); pointer-events: none; box-shadow: 0 6px 16px rgba(36,29,26,.3); }
 @media (prefers-reduced-motion: reduce) { .ch-phone { transform: none !important; } .fly-bubble { display: none; } }
 
+/* ---------- dark finale: cities + footer inverted ---------- */
+.finale { background: #16110e; color: var(--paper); margin-top: 70px; }
+.finale section.ed { padding-top: 64px; }
+.finale .sec-kicker { color: var(--rose); }
+.finale .sec-title { color: var(--paper); }
+.finale .citycard { background: transparent; border-color: var(--paper); }
+.finale .citycard .n { color: var(--paper); }
+.finale .citycard.live { background: var(--paper); border-color: var(--paper); }
+.finale .citycard.live .n { color: var(--ink); }
+.finale .citycard.live .s { color: var(--teal); }
+.finale .citycard.soon { border-color: #55483e; }
+.finale .citycard.soon .s { color: #9c8d80; }
+.finale .rule { border-top-color: var(--paper); }
+.finale .foot h2 { color: var(--paper); }
+.finale .footer-meta { border-top-color: #38302a; color: #9c8d80; }
+
 /* ---------- footer ---------- */
 .foot { text-align: center; padding: 70px 20px 30px; }
 .foot .rule { margin-bottom: 26px; }
@@ -281,6 +297,7 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
   <footer>— the collide field guide</footer>
 </blockquote>
 
+<div class="finale">
 <section class="ed wrap" style="padding-top:12px">
   <div class="sec-kicker">where we are</div>
   <h2 class="sec-title" style="margin-bottom:26px">One city inked. More on the drafting table.</h2>
@@ -301,6 +318,7 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
     est. 2026 · made with warm regards in new york
   </div>
 </footer>
+</div>
 
 <script>
 /* ---------- the silly map: pins, drops, clouds, birds ---------- */
