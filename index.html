@@ -10,13 +10,14 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='40' cy='50' r='28' fill='%23e85d75'/><circle cx='60' cy='50' r='28' fill='%23219a8f' fill-opacity='.85'/></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Coming+Soon&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 :root {
   --paper: #fbf6f0; --surface: #fff; --surface-2: #f5ece2;
   --ink: #241d1a; --ink-2: #5c534d; --muted: #8a7e75; --faint: #c9bfb4; --line: #ece1d5;
   --rose: #e85d75; --rose-ink: #b03450; --teal: #18857a; --teal-ink: #0f5d55; --amber: #f0a830;
   --display: "Fraunces", Georgia, serif;
+  --kids: "Coming Soon", "Comic Sans MS", cursive;
   --body: "Inter", -apple-system, sans-serif;
 }
 * { box-sizing: border-box; }
@@ -38,7 +39,7 @@ a { color: inherit; }
 
 /* ---------- hero ---------- */
 .hero { text-align: center; padding: 30px 18px 8px; }
-.hero h1 { font: 600 clamp(34px, 6vw, 54px)/1.12 var(--display); letter-spacing: -1px; margin: 0 auto 16px; max-width: 720px; }
+.hero h1 { font: 400 clamp(36px, 6.4vw, 58px)/1.14 var(--kids); letter-spacing: 0; margin: 0 auto 16px; max-width: 720px; }
 .hero p { max-width: 540px; margin: 0 auto 26px; color: var(--ink-2); font-size: 17.5px; }
 .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .btn { display: inline-block; background: var(--ink); color: var(--paper); font: 700 16px var(--display); text-decoration: none;
@@ -91,12 +92,12 @@ a { color: inherit; }
 /* ---------- editorial sections ---------- */
 section.ed { padding: 56px 0 8px; }
 .sec-kicker { font: 700 11px var(--body); letter-spacing: 3px; color: var(--rose-ink); text-transform: uppercase; text-align: center; }
-.sec-title { font: 600 clamp(26px, 4vw, 36px)/1.2 var(--display); letter-spacing: -.5px; text-align: center; margin: 8px auto 40px; max-width: 640px; }
+.sec-title { font: 400 clamp(27px, 4.2vw, 38px)/1.25 var(--kids); letter-spacing: 0; text-align: center; margin: 8px auto 40px; max-width: 640px; }
 .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .col { padding: 28px 26px 32px; border-left: 1px solid var(--line); }
 .col:first-child { border-left: 0; }
 .col .big { font-size: 34px; }
-.col h3 { font: 600 20px var(--display); margin: 10px 0 8px; }
+.col h3 { font: 400 21px var(--kids); margin: 10px 0 8px; }
 .col p { color: var(--ink-2); font-size: 14.5px; margin: 0; }
 @media (max-width: 760px) { .cols { grid-template-columns: 1fr; } .col { border-left: 0; border-top: 1px solid var(--line); } .col:first-child { border-top: 0; } }
 
@@ -105,7 +106,7 @@ section.ed { padding: 56px 0 8px; }
 .step:last-child { border-bottom: 0; }
 .step::before { counter-increment: st; content: counter(st); flex: none; width: 40px; height: 40px; border-radius: 50%;
   background: var(--rose); color: #fff; display: grid; place-items: center; font: 700 18px var(--display); }
-.step h4 { font: 600 18px var(--display); margin: 6px 0 4px; }
+.step h4 { font: 400 19px var(--kids); margin: 6px 0 4px; }
 .step p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
 
 blockquote.pull { max-width: 620px; margin: 60px auto; padding: 0 22px; text-align: center; border: 0; }
@@ -115,14 +116,14 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
 .cities { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
 .citycard { border: 1.5px solid var(--ink); border-radius: 14px; padding: 14px 22px; text-align: center; background: var(--surface); min-width: 128px; }
 .citycard.soon { border-style: dashed; border-color: var(--faint); background: transparent; }
-.citycard .n { font: 600 18px var(--display); }
+.citycard .n { font: 400 19px var(--kids); }
 .citycard .s { font: italic 400 12px var(--display); color: var(--muted); margin-top: 2px; }
 .citycard.live .s { color: var(--teal-ink); font-style: normal; font-weight: 600; }
 
 /* ---------- footer ---------- */
 .foot { text-align: center; padding: 70px 20px 30px; }
 .foot .rule { margin-bottom: 26px; }
-.foot h2 { font: 600 clamp(28px, 5vw, 40px)/1.15 var(--display); letter-spacing: -.8px; margin: 0 0 18px; }
+.foot h2 { font: 400 clamp(30px, 5.2vw, 42px)/1.18 var(--kids); letter-spacing: 0; margin: 0 0 18px; }
 .footer-meta { margin-top: 46px; padding-top: 18px; border-top: 1px solid var(--line);
   font: 400 12.5px var(--body); color: var(--muted); line-height: 1.7; }
 </style>
