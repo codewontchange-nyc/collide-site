@@ -61,7 +61,7 @@ a { color: inherit; }
 .mapzone { max-width: 880px; margin: 34px auto 10px; padding: 0 18px; position: relative; }
 .mapframe { position: relative; border: 1.5px solid var(--ink); border-radius: 18px; overflow: hidden;
   background: #fffdf9; box-shadow: 0 18px 50px rgba(36,29,26,.14); cursor: crosshair; }
-.mapframe .art { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.mapframe .art { display: block; width: 100%; height: auto; aspect-ratio: 1041 / 669; object-fit: cover; user-select: none; -webkit-user-drag: none; }
 .map-cap { text-align: center; font: italic 500 15.5px var(--display); color: var(--muted); margin-top: 12px; }
 .map-cap b { color: var(--ink-2); }
 
@@ -151,7 +151,7 @@ blockquote.pull footer { font: 600 12px var(--body); letter-spacing: 2px; text-t
 .elsewhere { display: inline-block; margin: 10px 0; padding: 6px 16px; border: 1.5px dashed var(--muted);
   border-radius: 999px; font: 700 11px var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
 .ch-phone { display: flex; justify-content: center; will-change: transform; }
-.ch-phone img { width: min(300px, 78vw); border: 1.5px solid var(--ink); border-radius: 34px;
+.ch-phone img { width: min(300px, 78vw); aspect-ratio: 780 / 1328; object-fit: cover; border: 1.5px solid var(--ink); border-radius: 34px;
   box-shadow: 0 22px 54px rgba(36,29,26,.22); background: #fffdf9; }
 .ch-quote { margin-top: 22px; max-width: 400px; }
 .newsy { border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); height: 6px; margin-bottom: 14px; }
