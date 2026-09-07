@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You're invited — Collide</title>
+  <meta property="og:site_name" content="Collide" />
+  <meta property="og:title" content="You're invited to a Collide plan" />
+  <meta property="og:description" content="Casual plans & small communities, on a hand-drawn map of your city." />
+  <meta property="og:image" content="https://codewontchange-nyc.github.io/collide-site/map.jpg" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=Lacquer&display=swap" rel="stylesheet" />
+  <style>
+    :root { --paper:#fbf6f0; --ink:#241d1a; --rose:#e85d75; --teal:#18857a; --muted:#8a7e75; --line:#e6dbcd;
+      --serif:"Cormorant Garamond",Georgia,serif; --kids:"Lacquer",cursive; --body:Inter,system-ui,sans-serif; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.5 var(--body); }
+    .wrap { max-width:480px; margin:0 auto; padding:22px 18px 60px; }
+    .mark { display:flex; align-items:center; gap:9px; justify-content:center; margin-bottom:4px; }
+    .dot { width:15px; height:15px; border-radius:50%; display:inline-block; } .dot.p{background:var(--rose)} .dot.t{background:var(--teal);margin-left:-7px;opacity:.88}
+    .wordmark { font:500 26px var(--serif); }
+    .kicker { text-align:center; font:600 10.5px var(--body); letter-spacing:.28em; text-transform:uppercase; color:var(--muted); margin-bottom:22px; }
+    .card { background:#fff; border:2px solid var(--ink); border-radius:18px; padding:20px 18px; margin-bottom:14px; }
+    h1 { font:400 30px/1.15 var(--kids); margin:8px 0 6px; text-align:center; }
+    .when { text-align:center; font:600 11.5px var(--body); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+    .note { font:italic 500 16px/1.45 var(--serif); color:#5c534d; text-align:center; margin:12px 0 0; }
+    .evimg { width:100%; border-radius:12px; border:1.5px solid var(--line); margin-top:12px; display:none; }
+    .goingrow { display:flex; align-items:center; justify-content:center; margin:16px 0 4px; }
+    .av { width:38px; height:38px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1.5px var(--ink); object-fit:cover; margin-left:-8px; background:#f1e7db; font:600 15px/34px var(--body); text-align:center; color:var(--ink); }
+    .av:first-child { margin-left:0; }
+    .goingtext { text-align:center; font:600 13px var(--body); margin-top:8px; }
+    .invitedby { display:flex; align-items:center; gap:8px; justify-content:center; margin:14px 0 2px; font:600 12.5px var(--body); color:var(--muted); }
+    .invitedby img { width:24px; height:24px; border-radius:50%; box-shadow:0 0 0 1.5px var(--ink); }
+    .comm { display:flex; gap:12px; align-items:flex-start; }
+    .comm .emoji { font-size:26px; }
+    .comm b { font:600 16px var(--body); } .comm p { margin:3px 0 0; color:var(--muted); font-size:13px; }
+    .commstat { font:600 10.5px var(--body); letter-spacing:.12em; text-transform:uppercase; color:var(--teal); margin-top:6px; }
+    .toggle { display:flex; align-items:center; gap:10px; margin:14px 2px 4px; font:500 13.5px var(--body); cursor:pointer; }
+    .toggle input { width:20px; height:20px; accent-color:var(--teal); }
+    .btn { display:block; width:100%; border:none; border-radius:999px; background:var(--rose); color:#fff; font:700 17px var(--body); padding:15px; cursor:pointer; text-align:center; text-decoration:none; }
+    .btn.ghost { background:transparent; color:var(--ink); border:2px solid var(--ink); }
+    .email { width:100%; border:2px solid var(--ink); border-radius:999px; padding:13px 16px; font:500 15px var(--body); margin-bottom:10px; outline:none; background:#fff; }
+    .fine { text-align:center; font-size:12px; color:var(--muted); margin-top:10px; }
+    .fine a { color:var(--teal); }
+    .cal { display:block; text-align:center; margin-top:14px; font:600 13px var(--body); color:var(--ink); }
+    .hide { display:none !important; }
+    .done { text-align:center; padding:8px 0; }
+    .done .big { font:400 26px var(--kids); margin:6px 0 10px; }
+    #err { text-align:center; color:#b3402f; font-size:13px; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mark"><span class="dot p"></span><span class="dot t"></span><span class="wordmark">collide</span></div>
+    <div class="kicker">you're invited</div>
+
+    <div id="loading" class="card" style="text-align:center">Unfolding the invite…</div>
+    <div id="gone" class="card hide" style="text-align:center">
+      <h1>This plan has wrapped</h1>
+      <p class="note">The night happened, the photos exist. Catch the next one.</p>
+      <a class="btn" style="margin-top:16px" href="https://codewontchange-nyc.github.io/collide-site/">See what Collide is →</a>
+    </div>
+
+    <div id="main" class="hide">
+      <div class="card">
+        <div id="invitedby" class="invitedby hide"></div>
+        <h1 id="title"></h1>
+        <div id="when" class="when"></div>
+        <img id="evimg" class="evimg" alt="" />
+        <p id="note" class="note"></p>
+        <div id="goingrow" class="goingrow"></div>
+        <div id="goingtext" class="goingtext"></div>
+      </div>
+
+      <div id="commcard" class="card hide">
+        <div class="comm">
+          <span id="cemoji" class="emoji"></span>
+          <div>
+            <b>Hosted in <span id="cname"></span></b>
+            <p id="cdesc"></p>
+            <div id="cstat" class="commstat"></div>
+          </div>
+        </div>
+        <label class="toggle"><input id="joincomm" type="checkbox" checked />
+          <span>Also join <b id="cname2"></b><span id="vouch"> — this invite vouches you in</span></span></label>
+      </div>
+
+      <div class="card" id="ctacard">
+        <div id="authed" class="hide">
+          <button id="joinbtn" class="btn">I'm in 🙌</button>
+        </div>
+        <div id="anon2">
+          <input id="email" class="email" type="email" placeholder="you@email.com" />
+          <button id="signupbtn" class="btn">I'm in — sign me up 🙌</button>
+          <p class="fine">Free, no passwords — we email you a magic link. Already on Collide? Same button works.</p>
+        </div>
+        <div id="done" class="done hide">
+          <div class="big" id="donemsg"></div>
+          <a id="openapp" class="btn" href="#">Open the event →</a>
+        </div>
+        <div id="emailed" class="done hide">
+          <div class="big">Check your email 💌</div>
+          <p class="fine">Tap the link we sent — you'll land right in the plan.</p>
+        </div>
+        <div id="err"></div>
+        <a id="cal" class="cal hide" href="#">📅 Add to calendar</a>
+      </div>
+      <p class="fine">Collide — casual plans & small communities on a hand-drawn map of your city.</p>
+    </div>
+  </div>
+
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
+  const SB_URL = "https://pjxvvwcnjjizdtiutpxd.supabase.co";
+  const client = createClient(SB_URL, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqeHZ2d2NuamppemR0aXV0cHhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1NzI4MTgsImV4cCI6MjEwMjE0ODgxOH0.IIefwyxWZlzX1JgXvsz1GEOPDjZtkWELxJniqqi2RNI");
+  const APP = "https://codewontchange-nyc.github.io/Collide/";
+  const AV = SB_URL + "/storage/v1/object/public/avatars/";
+  const MEDIA = SB_URL + "/storage/v1/object/public/event-media/";
+  const qs = new URLSearchParams(location.search);
+  const eid = qs.get("e"), ref = qs.get("ref") || "";
+  const el = (id) => document.getElementById(id);
+  const show = (id, on = true) => el(id).classList.toggle("hide", !on);
+
+  const prettyWhen = (ev) => [
+    ev.date ? new Date(ev.date + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }) : "starts whenever you're ready",
+    ev.at_time, ev.place, ev.city ? ev.city.toUpperCase() : null,
+  ].filter(Boolean).join(" · ");
+
+  let P = null;
+  async function load() {
+    if (!eid) { show("loading", false); show("gone"); return; }
+    const { data } = await client.rpc("event_invite_preview", { eid });
+    show("loading", false);
+    if (!data) { show("gone"); return; }
+    P = data;
+    const ev = data.event;
+    el("title").textContent = ev.title;
+    el("when").textContent = prettyWhen(ev);
+    if (ev.note) el("note").textContent = ev.note;
+    if (ev.image_path) { el("evimg").src = MEDIA + ev.image_path; el("evimg").style.display = "block"; }
+    const sample = data.going.sample || [];
+    el("goingrow").innerHTML = sample.map((g) => g.avatar_url
+      ? '<img class="av" src="' + AV + g.avatar_url + '" alt="" onerror="this.outerHTML=\'<span class=av>' + (g.first_name || "?")[0] + '</span>\'" />'
+      : '<span class="av">' + (g.first_name || "?")[0] + "</span>").join("");
+    const names = sample.slice(0, 3).map((g) => g.first_name).filter(Boolean);
+    el("goingtext").textContent = data.going.count > 0
+      ? names.join(", ") + (data.going.count > names.length ? " + " + (data.going.count - names.length) + " more are in" : (names.length > 1 ? " are in" : " is in"))
+      : "Be the first one in";
+    if (data.community) {
+      show("commcard");
+      el("cemoji").textContent = data.community.emoji || "🏘️";
+      el("cname").textContent = data.community.name; el("cname2").textContent = data.community.name;
+      el("cdesc").textContent = data.community.description || data.community.blurb || "";
+      el("cstat").textContent = data.community.member_count + " members · " + data.community.upcoming_events + " coming up";
+    }
+    if (ref) {
+      const { data: inv } = await client.rpc("invite_preview", { code: ref });
+      const s = inv && inv[0];
+      if (s) { show("invitedby"); el("invitedby").innerHTML =
+        (s.avatar_url ? '<img src="' + AV + s.avatar_url + '" alt="" />' : "") +
+        "<span>Invited by " + (s.display_name || "a member").split(" ")[0] + "</span>"; }
+      else show("vouch", false);
+    } else show("vouch", false);
+    if (ev.date) { show("cal"); el("cal").href = SB_URL + "/functions/v1/ics?event=" + eid; }
+    show("main");
+    const { data: sess } = await client.auth.getSession();
+    if (sess?.session) { show("authed"); show("anon2", false); }
+  }
+
+  const intent = () => ({ e: eid, comm: !el("joincomm").checked ? false : true, ref });
+  const fail = (m) => { el("err").textContent = m; };
+
+  el("joinbtn")?.addEventListener("click", async () => {
+    el("err").textContent = ""; el("joinbtn").disabled = true;
+    const i = intent();
+    const { data, error } = await client.rpc("join_event", { eid: i.e, join_comm: i.comm, via: i.ref || null });
+    el("joinbtn").disabled = false;
+    if (error || data?.error) return fail("That didn't take — try again in a sec.");
+    el("donemsg").textContent = data.community_status === "member" ? "You're in — both of them 🎉" : "You're in 🎉";
+    el("openapp").href = APP + "event/" + eid;
+    show("authed", false); show("done");
+  });
+
+  el("signupbtn").addEventListener("click", async () => {
+    el("err").textContent = "";
+    const email = el("email").value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail("Enter your email first");
+    el("signupbtn").disabled = true;
+    const i = intent();
+    try { localStorage.setItem("collide.pending_join", JSON.stringify(i)); } catch {}
+    const { error } = await client.auth.signInWithOtp({ email, options: {
+      emailRedirectTo: APP, data: { pending_join: i },
+    }});
+    el("signupbtn").disabled = false;
+    if (error) return fail(error.message);
+    show("anon2", false); show("emailed");
+  });
+
+  load();
+</script>
+</body>
+</html>
