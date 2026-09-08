@@ -51,7 +51,7 @@
 <body>
   <div class="wrap">
     <div class="mark"><span class="dot p"></span><span class="dot t"></span><span class="wordmark">collide</span></div>
-    <div class="kicker">you're invited</div>
+    <div class="kicker" id="ok_kicker">you're invited</div>
 
     <div id="loading" class="card" style="text-align:center">Unfolding the invite…</div>
     <div id="gone" class="card hide" style="text-align:center">
@@ -126,7 +126,16 @@
   ].filter(Boolean).join(" · ");
 
   let P = null;
+  async function applyCopy() {
+    try {
+      const { data } = await client.from("onboarding_copy").select("key,text").in("key", ["invite.kicker","invite.cta"]);
+      const m = Object.fromEntries((data || []).map((r) => [r.key, r.text]));
+      if (m["invite.kicker"]) document.getElementById("ok_kicker").textContent = m["invite.kicker"].toLowerCase() === m["invite.kicker"] ? m["invite.kicker"] : m["invite.kicker"];
+      if (m["invite.cta"]) document.getElementById("signupbtn").textContent = m["invite.cta"];
+    } catch (e) {}
+  }
   async function load() {
+    applyCopy();
     if (!eid) { show("loading", false); show("gone"); return; }
     const { data } = await client.rpc("event_invite_preview", { eid });
     show("loading", false);
