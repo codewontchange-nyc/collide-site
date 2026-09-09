@@ -119,6 +119,9 @@
   const eid = qs.get("e"), ref = qs.get("ref") || "";
   const el = (id) => document.getElementById(id);
   const show = (id, on = true) => el(id).classList.toggle("hide", !on);
+  // Only allow well-formed storage paths (no quotes/spaces/markup) — avatar_url is user-controlled.
+  const safeAvatar = (p) => (typeof p === "string" && /^[A-Za-z0-9][A-Za-z0-9._/-]*$/.test(p) && !p.includes("..")) ? p : null;
+  const initialOf = (name) => ((name || "?").trim()[0] || "?");
 
   const prettyWhen = (ev) => [
     ev.date ? new Date(ev.date + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }) : "starts whenever you're ready",
@@ -147,9 +150,19 @@
     if (ev.note) el("note").textContent = ev.note;
     if (ev.image_path) { el("evimg").src = MEDIA + ev.image_path; el("evimg").style.display = "block"; }
     const sample = data.going.sample || [];
-    el("goingrow").innerHTML = sample.map((g) => g.avatar_url
-      ? '<img class="av" src="' + AV + g.avatar_url + '" alt="" onerror="this.outerHTML=\'<span class=av>' + (g.first_name || "?")[0] + '</span>\'" />'
-      : '<span class="av">' + (g.first_name || "?")[0] + "</span>").join("");
+    const gr = el("goingrow"); gr.textContent = "";
+    sample.forEach((g) => {
+      const initial = initialOf(g.first_name);
+      const path = safeAvatar(g.avatar_url);
+      if (path) {
+        const img = document.createElement("img");
+        img.className = "av"; img.src = AV + path; img.alt = "";
+        img.onerror = () => { const s = document.createElement("span"); s.className = "av"; s.textContent = initial; img.replaceWith(s); };
+        gr.appendChild(img);
+      } else {
+        const s = document.createElement("span"); s.className = "av"; s.textContent = initial; gr.appendChild(s);
+      }
+    });
     const names = sample.slice(0, 3).map((g) => g.first_name).filter(Boolean);
     el("goingtext").textContent = data.going.count > 0
       ? names.join(", ") + (data.going.count > names.length ? " + " + (data.going.count - names.length) + " more are in" : (names.length > 1 ? " are in" : " is in"))
@@ -164,10 +177,15 @@
     if (ref) {
       const { data: inv } = await client.rpc("invite_preview", { code: ref });
       const s = inv && inv[0];
-      if (s) { show("invitedby"); el("invitedby").innerHTML =
-        (s.avatar_url ? '<img src="' + AV + s.avatar_url + '" alt="" />' : "") +
-        "<span>Invited by " + (s.display_name || "a member").split(" ")[0] + "</span>"; }
-      else show("vouch", false);
+      if (s) {
+        show("invitedby");
+        const ib = el("invitedby"); ib.textContent = "";
+        const path = safeAvatar(s.avatar_url);
+        if (path) { const img = document.createElement("img"); img.src = AV + path; img.alt = ""; ib.appendChild(img); }
+        const span = document.createElement("span");
+        span.textContent = "Invited by " + (s.display_name || "a member").split(" ")[0];
+        ib.appendChild(span);
+      } else show("vouch", false);
     } else show("vouch", false);
     if (ev.date) { show("cal"); el("cal").href = SB_URL + "/functions/v1/ics?event=" + eid; }
     show("main");
